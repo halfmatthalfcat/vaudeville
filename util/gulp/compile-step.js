@@ -20,8 +20,9 @@ module.exports = (gulp, rootDir) => {
 
   gulp.task("ts-compile", [ "lint" ], () => {
 
-    return gulp.src(path.join(rootDir, "/src/**/*.ts"))
-      .pipe(tsProject());
+    return gulp.src(path.join(rootDir, "/{src,test}/**/*.ts"))
+      .pipe(tsProject())
+      .pipe(gulp.dest(path.join(rootDir, "/dist")));
 
   });
 

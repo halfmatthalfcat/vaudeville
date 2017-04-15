@@ -8,7 +8,7 @@
     "strictNullChecks": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "noUnusedParameters": true,
     "suppressImplicitAnyIndexErrors": true,
     "allowSyntheticDefaultImports": true,
