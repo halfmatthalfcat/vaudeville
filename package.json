@@ -1,0 +1,27 @@
+{
+  "name": "vaudeville",
+  "version": "1.0.0",
+  "description": "Node actor system using Rxjs",
+  "repository": "https://github.com/halfmatthalfcat/vaudeville",
+  "scripts": {
+    "build": "gulp build"
+  },
+  "pre-commit": [
+    "build"
+  ],
+  "author": "Matt Oliver <mjo2089@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "rxjs": "^5.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^7.0.12",
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-tslint": "^8.0.0",
+    "gulp-typescript": "^3.1.6",
+    "pre-commit": "^1.2.2",
+    "tslint": "^5.1.0",
+    "typescript": "^2.2.2"
+  }
+}
