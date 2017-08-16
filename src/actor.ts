@@ -10,24 +10,48 @@ import { IActor, IActorMsg, ReceiveLogic } from './actor.d';
 
 export abstract class Actor implements IActor {
 
+  /* Implementation defined message handler */
   protected abstract receive: ReceiveLogic;
 
-  public mailbox: Subject<{}> = new Subject<{}>();
+  /* Actor message mailbox */
+  /* tslint:disable-next-line no-any */
+  protected mailbox: Subject<any> = new Subject<any>();
+
+  /* Actors created under implemented actor */
+  protected children: WeakSet<Actor>;
 
   constructor(
     public actorName: string,
   ) { this.mailbox.subscribe((actorMsg: IActorMsg) => this.runReceive(actorMsg)); }
 
-  public tell(actor: IActor, msg: {}): void {
+  /**
+   * Fire-and-forget message
+   * @typedef {T} - The type of the message
+   * @param {IActor} actor - The receiving actor
+   * @param {T} msg - The message to receiving actor
+   */
+  public tell<T>(actor: IActor, msg: T): void {
     actor.mailbox.next({ sender: this, msg });
   }
 
-  public ask(actor: IActor, msg: {}): Observable<{}> {
-    return Observable.create((observer: Observer<{}>) => {
+  /**
+   * Fire-and-wait message
+   * @typedef {A} - The type of message sent
+   * @typedef {B} - The type of message to receive
+   * @param {IActor} actor - The receiving actor
+   * @param {A} msg - The message to receiving actor
+   * @return {Observable<B>} - The eventual result from receiving actor
+   */
+  public ask<A, B>(actor: IActor, msg: A): Observable<B> {
+    return Observable.create((observer: Observer<B>) => {
       actor.mailbox.next({ sender: this, msg, resolve: observer.next });
     });
   }
 
+  /**
+   * When a message is received by implemented actor,
+   * run the defined ReceiveLogic
+   */
   private runReceive(actorMsg: IActorMsg): void {
     if (
       typeof actorMsg.msg === 'object' &&

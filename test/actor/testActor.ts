@@ -1,5 +1,5 @@
-import { Actor } from '../../src/actor';
-import { IActorMsg, ReceiveLogic } from '../../src/actor.d';
+import { IActorMsg, ReceiveLogic } from '../../src/actor.d.ts';
+import { Actor } from '../../src/actor.ts';
 
 export class TestActor extends Actor {
 
