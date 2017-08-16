@@ -14,11 +14,11 @@ interface ReceiveLogic {
 export interface IActor {
   actorName: string;
 
-  mailbox: Subject<{}>;
+  actorOf: (actor: IActor) => IActor;
 }
 
-export interface IActorMsg {
+export interface IActorMsg<A, B> {
   sender: IActor;
-  msg: {};
-  resolve?: (value: {} | Promise<{}>) => void;
+  msg: A;
+  resolve?: (value: B) => void;
 }

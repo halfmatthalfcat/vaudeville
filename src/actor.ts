@@ -30,7 +30,7 @@ export abstract class Actor implements IActor {
    * @param {IActor} actor - The receiving actor
    * @param {T} msg - The message to receiving actor
    */
-  public tell<T>(actor: IActor, msg: T): void {
+  public tell<T>(actor: Actor, msg: T): void {
     actor.mailbox.next({ sender: this, msg });
   }
 
@@ -42,10 +42,15 @@ export abstract class Actor implements IActor {
    * @param {A} msg - The message to receiving actor
    * @return {Observable<B>} - The eventual result from receiving actor
    */
-  public ask<A, B>(actor: IActor, msg: A): Observable<B> {
+  public ask<A, B>(actor: Actor, msg: A): Observable<B> {
     return Observable.create((observer: Observer<B>) => {
       actor.mailbox.next({ sender: this, msg, resolve: observer.next });
     });
+  }
+
+  public actorOf(actor: Actor): Actor {
+    this.children.add(actor);
+    return actor;
   }
 
   /**
