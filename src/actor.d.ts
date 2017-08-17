@@ -2,8 +2,6 @@
  * Definitions for Vaudeville Actors
  */
 
-import { Subject } from 'rxjs/Subject';
-
 interface ReceiveLogic {
   [typeName: string]: (msg: IActorMsg) => void;
   [typeName: number]: (msg: IActorMsg) => void;

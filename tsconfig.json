@@ -21,10 +21,12 @@
       "es2016"
     ],
     "typeRoots": [
-      "node_modules/@types"
+      "node_modules/@types",
+      "src/**/*.d.ts"
     ],
     "types": [
-      "node"
+      "node",
+      "jasmine"
     ]
   },
   "exclude": [

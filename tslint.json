@@ -60,7 +60,7 @@
     "no-empty": true,
     "no-empty-interface": true,
     "no-eval": true,
-    "no-inferrable-types": true,
+    "no-inferrable-types": false,
     "no-reference": true,
     "no-require-imports": true,
     "no-shadowed-variable": true,

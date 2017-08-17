@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import { Subject } from 'rxjs/Subject';
 
-import { IActor, IActorMsg, ReceiveLogic } from './actor.d';
+import { IActor, IActorMsg, ReceiveLogic } from './actor';
 
 export abstract class Actor implements IActor {
 
@@ -42,9 +42,9 @@ export abstract class Actor implements IActor {
    * @param {A} msg - The message to receiving actor
    * @return {Observable<B>} - The eventual result from receiving actor
    */
-  public ask<A, B>(actor: Actor, msg: A): Observable<B> {
-    return Observable.create((observer: Observer<B>) => {
-      actor.mailbox.next({ sender: this, msg, resolve: observer.next });
+  public ask<A, B>(actor: Actor, msg: A): Promise<B> {
+    return new Promise((resolve) => {
+      actor.mailbox.next({ sender: this, msg, resolve });
     });
   }
 
@@ -69,16 +69,13 @@ export abstract class Actor implements IActor {
     ) {
       this.receive[actorMsg.msg](actorMsg);
     } else if (
-      typeof actorMsg.msg === 'boolean' &&
-      this.receive.hasOwnProperty(actorMsg.msg.toString())
-    ) {
-      this.receive[actorMsg.msg.toString()](actorMsg);
-    } else if (
       typeof actorMsg.msg === 'string' &&
       this.receive.hasOwnProperty(actorMsg.msg)
     ) {
       this.receive[actorMsg.msg](actorMsg);
-    } else {
+    } else if (
+      this.receive.hasOwnProperty('_')
+    ) {
       this.receive['_'](actorMsg);
     }
   }
