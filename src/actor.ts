@@ -3,7 +3,6 @@
  */
 
 import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
 import { Subject } from 'rxjs/Subject';
 
 import { IActor, IActorMsg, ReceiveLogic } from './actor';
@@ -18,11 +17,13 @@ export abstract class Actor implements IActor {
   protected mailbox: Subject<any> = new Subject<any>();
 
   /* Actors created under implemented actor */
-  protected children: WeakSet<Actor>;
+  protected children: Set<Actor>;
 
   constructor(
     public actorName: string,
-  ) { this.mailbox.subscribe((actorMsg: IActorMsg) => this.runReceive(actorMsg)); }
+  ) {
+    this.mailbox.subscribe((actorMsg: IActorMsg) => this.runReceive(actorMsg));
+  }
 
   /**
    * Fire-and-forget message

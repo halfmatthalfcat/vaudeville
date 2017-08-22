@@ -20,3 +20,11 @@ export interface IActorMsg<A, B> {
   msg: A;
   resolve?: (value: B) => void;
 }
+
+export interface IActorProps {
+  name: string;
+}
+
+export interface IActorRef {
+  path: string;
+}
