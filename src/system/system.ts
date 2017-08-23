@@ -2,8 +2,8 @@
  * Vaudeville Actor System
  */
 
-import { IActor } from './actor.d';
-import { IActorSystem } from "./system.d";
+import { IActor } from '../actor/actor';
+import { IActorSystem } from "./system";
 
 export class ActorSystem implements IActorSystem {
 

@@ -2,8 +2,8 @@
  * Reference Ask Actor used in testing
  */
 
-import { IActorMsg, ReceiveLogic } from '../../src/actor';
-import { Actor } from '../../src/actor.ts';
+import { IActorMsg, ReceiveLogic } from '../../src/actor/actor';
+import { Actor } from '../../src/actor/actor.ts';
 
 export class AskTestActor extends Actor {
 

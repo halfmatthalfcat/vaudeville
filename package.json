@@ -13,7 +13,6 @@
   "author": "Matt Oliver <mjo2089@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "gulp-jest-cli": "../",
     "rxjs": "^5.4.3"
   },
   "devDependencies": {

@@ -2,8 +2,8 @@
  * Reference Tell Actor used in testing
  */
 
-import { IActorMsg, ReceiveLogic } from '../../src/actor';
-import { Actor } from '../../src/actor.ts';
+import { IActorMsg, ReceiveLogic } from '../../src/actor/actor';
+import { Actor } from '../../src/actor/actor.ts';
 
 export class TellTestActor extends Actor {
 

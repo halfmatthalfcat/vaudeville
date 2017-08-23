@@ -2,10 +2,10 @@
  * Unit tests for Actor.ts
  */
 
-import { SomeClass } from '../test/actor/util';
+import { SomeClass } from '../util/util';
 
-import { AskTestActor } from '../test/actor/askTestActor';
-import { TellTestActor } from '../test/actor/tellTestActor';
+import { AskTestActor } from '../util/askTestActor';
+import { TellTestActor } from '../util/tellTestActor';
 
 describe('Actor', () => {
 
