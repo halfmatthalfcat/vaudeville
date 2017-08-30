@@ -11,6 +11,38 @@ describe('SystemTree', () => {
 
   describe('TreeUtils', () => {
 
+    let complexTree: ITree = {};
+
+    beforeEach(() => complexTree = {
+      system: {
+        children: {
+          singleton: {
+            children: {},
+            mailbox: new Observable<{}>(),
+            thread: '2345',
+          },
+          stats: {
+            children: {},
+            mailbox: new Observable<{}>(),
+            thread: '2345',
+          },
+        },
+        mailbox: new Observable<{}>(),
+        thread: '2345',
+      },
+      user: {
+        children: {
+          http: {
+            children: {},
+            mailbox: new Observable<{}>(),
+            thread: '2345',
+          },
+        },
+        mailbox: new Observable<{}>(),
+        thread: '3457',
+      },
+    });
+
     describe('expandPath', () => {
 
       it('should split a path with forward slashes', () => {
@@ -68,60 +100,30 @@ describe('SystemTree', () => {
 
     describe('getNode', () => {
 
-      const testTree: ITree = {
-        system: {
-          children: {
-            singleton: {
-              children: {},
-              mailbox: new Observable<{}>(),
-              thread: '2345',
-            },
-            stats: {
-              children: {},
-              mailbox: new Observable<{}>(),
-              thread: '2345',
-            },
-          },
-          mailbox: new Observable<{}>(),
-          thread: '2345',
-        },
-        user: {
-          children: {
-            http: {
-              children: {},
-              mailbox: new Observable<{}>(),
-              thread: '2345',
-            },
-          },
-          mailbox: new Observable<{}>(),
-          thread: '3457',
-        },
-      };
-
       it('should find a first level node', () => {
         const path: string = 'system';
-        const node: INode | null = TreeUtils.getNode(path, testTree);
+        const node: INode | null = TreeUtils.getNode(path, complexTree);
 
         expect(node).not.toBeNull();
       });
 
       it('should find a second level node', () => {
         const path: string = 'system/singleton';
-        const node: INode | null = TreeUtils.getNode(path, testTree);
+        const node: INode | null = TreeUtils.getNode(path, complexTree);
 
         expect(node).not.toBeNull();
       });
 
       it('should return null if no node is found, first level', () => {
         const path: string = 'null';
-        const node: INode | null = TreeUtils.getNode(path, testTree);
+        const node: INode | null = TreeUtils.getNode(path, complexTree);
 
         expect(node).toBeNull();
       });
 
-      it('should return ull if no node is found, second level', () => {
+      it('should return null if no node is found, second level', () => {
         const path: string = 'system/null';
-        const node: INode | null = TreeUtils.getNode(path, testTree);
+        const node: INode | null = TreeUtils.getNode(path, complexTree);
 
         expect(node).toBeNull();
       });
@@ -129,36 +131,6 @@ describe('SystemTree', () => {
     });
 
     describe('addNode', () => {
-
-      const complexTree: ITree = {
-        system: {
-          children: {
-            singleton: {
-              children: {},
-              mailbox: new Observable<{}>(),
-              thread: '2345',
-            },
-            stats: {
-              children: {},
-              mailbox: new Observable<{}>(),
-              thread: '2345',
-            },
-          },
-          mailbox: new Observable<{}>(),
-          thread: '2345',
-        },
-        user: {
-          children: {
-            http: {
-              children: {},
-              mailbox: new Observable<{}>(),
-              thread: '2345',
-            },
-          },
-          mailbox: new Observable<{}>(),
-          thread: '3457',
-        },
-      };
 
       it('should add a node to an empty tree', () => {
 
@@ -203,6 +175,34 @@ describe('SystemTree', () => {
         expect(newTree).toBeDefined();
         expect(TreeUtils.getNode('user/http/worker', newTree)).not.toBeNull();
         expect(TreeUtils.getNode('system/singleton', newTree)).not.toBeNull();
+
+      });
+
+    });
+
+    describe('removeNode', () => {
+
+      it('should remove a node from a complex tree', () => {
+
+        const newTree: ITree = TreeUtils.removeNode(
+          'system/singleton',
+          complexTree,
+        );
+
+        expect(newTree).toBeDefined();
+        expect(TreeUtils.getNode('system/singleton', newTree)).toBeNull();
+
+      });
+
+      it('should return the same tree if node not found', () => {
+
+        const newTree: ITree = TreeUtils.removeNode(
+          'null',
+          complexTree,
+        );
+
+        expect(newTree).toBeDefined();
+        expect(newTree).toEqual(complexTree);
 
       });
 

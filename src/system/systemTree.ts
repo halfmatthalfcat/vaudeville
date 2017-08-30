@@ -115,33 +115,36 @@ export class TreeUtils {
       };
     } else { return tree; }
   }
-}
 
-/**
- * {
- *  system: {
- *    mailbox: ...,
- *    thread: 1,
- *    children: [
- *      {
- *        singleton: {
- *          thread: 2,
- *          mailbox: ...,
- *        }
- *      }
- *    ],
- *  },
- *  user: {
- *    mailbox: ...,
- *    thread: 2,
- *    children: [
- *      {
- *        http: {
- *          thread: 1,
- *          mailbox: ...
- *        }
- *      }
- *    ]
- *  }
- * }
- */
+  /**
+   * Remove a node from a given tree for a given path and return the new tree
+   * @param {string} path - The path of the node to remove
+   * @param {ITree} tree - The tree to remove from
+   * @param {?string} pathHead - Current path head based on given path
+   * @return {ITree} - A new tree with the node added at the specified path
+   */
+  public static removeNode(
+    path: string,
+    tree: ITree,
+    pathHead: string = TreeUtils.pathHead(path),
+  ): ITree {
+    if (path === pathHead) {
+      const { [pathHead]: removalNode, ...rest } = tree;
+      return rest;
+    } else if (
+      tree[pathHead] &&
+      tree[pathHead].children
+    ) {
+      return {
+        ...tree,
+        [pathHead]: {
+          ...tree[pathHead],
+          children: TreeUtils.removeNode(
+            TreeUtils.popPath(path),
+            tree[pathHead].children,
+          ),
+        },
+      };
+    } else { return tree; }
+  }
+}
