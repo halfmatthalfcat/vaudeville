@@ -5,7 +5,10 @@
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
-import { ActorMsg, ActorRef, ClientReceiveLogic, IActor } from './actor';
+import { ActorSystem } from '../system/system';
+
+import { ActorMsg, ClientReceiveLogic, IActor } from './actor.d';
+import { ActorRef } from './actorRef';
 
 /* tslint:disable-next-line no-any interface-over-type-literal */
 export type ActorType<T extends Actor> = { new (...args: Array<any>): T };
@@ -15,6 +18,9 @@ export abstract class Actor implements IActor {
   /* Implementation defined message handler */
   protected abstract receive: ClientReceiveLogic;
 
+  /* Reference to the attached actor system this actor resides in */
+  protected system: ActorSystem;
+
   /* Actor message mailbox */
   /* tslint:disable-next-line no-any */
   protected mailbox: Subject<any> = new Subject<any>();
@@ -22,11 +28,14 @@ export abstract class Actor implements IActor {
   /* Actors created under implemented actor */
   protected children: WeakSet<Actor>;
 
+  /* Path of this actor to the system root */
+  protected path: string;
+
   /* Reference to self to avoid GC until actor is killed */
   private self: this = this;
 
   constructor(
-    public actorName: string,
+    protected name: string,
   ) {
     this.mailbox.subscribe((actorMsg: ActorMsg) => this.runReceive(actorMsg));
   }
@@ -34,24 +43,24 @@ export abstract class Actor implements IActor {
   /**
    * Fire-and-forget message
    * @typedef {T} - The type of the message
-   * @param {IActor} actor - The receiving actor
+   * @param {ActorRef} actor - The receiving actor reference
    * @param {T} msg - The message to receiving actor
    */
-  protected tell<T>(actor: Actor, msg: T): void {
-    actor.mailbox.next({ sender: this, msg });
+  public tell<T>(actor: ActorRef, msg: T): void {
+    // actor.mailbox.next({ sender: this, msg });
   }
 
   /**
    * Fire-and-wait message
    * @typedef {A} - The type of message sent
    * @typedef {B} - The type of message to receive
-   * @param {IActor} actor - The receiving actor
+   * @param {ActorRef} actor - The receiving actor reference
    * @param {A} msg - The message to receiving actor
    * @return {Observable<B>} - The eventual result from receiving actor
    */
-  protected ask<A, B>(actor: Actor, msg: A): Promise<B> {
+  public ask<A, B>(actor: ActorRef, msg: A): Promise<B> {
     return new Promise((resolve) => {
-      actor.mailbox.next({ sender: this, msg, resolve });
+      // actor.mailbox.next({ sender: this, msg, resolve });
     });
   }
 
@@ -61,12 +70,21 @@ export abstract class Actor implements IActor {
    * @param {Array<any>} args - Instantiation args for the new actor (props)
    * @returns {ActorRef} - A reference to the newly created actor
    */
-  /* tslint:disable-next-line no-any */
-  protected actorOf(actorType: ActorType, ...args: Array<any>): ActorRef {
-    let actor: Actor = new actorType(...args);
-    this.children.add(actor);
-    actor = null;
-    return actor;
+  protected actorOf(
+    actorType: ActorType,
+    /* tslint:disable-next-line no-any */
+    ...args: Array<any>,
+  ): ActorRef {
+    let actor: Actor;
+    try {
+      actor = new actorType(...args);
+      actor.path = `${this.path}/${actor.name}`;
+      actor.system = this.system;
+      this.children.add(actor);
+      return new ActorRef(actor.path);
+    } finally {
+      actor = null;
+    }
   }
 
   /**

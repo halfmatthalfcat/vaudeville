@@ -26,7 +26,3 @@ export interface ActorMsg<A, B> {
   msg: A;
   resolve?: (value: B) => void;
 }
-
-export interface ActorRef {
-  path: string;
-}

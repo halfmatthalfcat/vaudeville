@@ -15,7 +15,7 @@ module.exports = function(gulp, rootDir) {
   gulp.task("unit", [ "lint" ], function() {
 
     return gulp
-      .src(path.join(rootDir, "/src"))
+      .src(path.join(rootDir, "/test"))
       .pipe(jest({
         config: {
           testEnvironment: "node",
