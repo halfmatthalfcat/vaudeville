@@ -1,5 +1,5 @@
 /**
- * Definitions for a SystemTree
+ * Definitions for an ActorTree
  */
 /* tslint:disable no-any */
 
@@ -7,9 +7,9 @@ import { Observable } from 'rxjs/Observable';
 
 import { ActorMsg } from '../actor/actor.d';
 
-export interface ISystemTree {
-  getNode: (path: string) => boolean;
-  addNode: (node: INode) => void;
+export interface IActorTree {
+  getNode: (path: string) => INode | null;
+  addNode: (path: string, node: INode) => void;
   removeNode: (path: string) => void;
 
   // tell: (msg: ActorMsg<any, any>) => void;

@@ -11,7 +11,7 @@ import { ActorMsg, ClientReceiveLogic, IActor } from './actor.d';
 import { ActorRef } from './actorRef';
 
 /* tslint:disable-next-line no-any interface-over-type-literal */
-export type ActorType<T extends Actor> = { new (...args: Array<any>): T };
+export type ActorType = { new (...args: Array<any>): Actor };
 
 export abstract class Actor implements IActor {
 
@@ -29,13 +29,13 @@ export abstract class Actor implements IActor {
   protected children: WeakSet<Actor>;
 
   /* Path of this actor to the system root */
-  protected path: string;
+  public path: string;
 
   /* Reference to self to avoid GC until actor is killed */
   private self: this = this;
 
   constructor(
-    protected name: string,
+    public name: string,
   ) {
     this.mailbox.subscribe((actorMsg: ActorMsg) => this.runReceive(actorMsg));
   }
@@ -70,21 +70,16 @@ export abstract class Actor implements IActor {
    * @param {Array<any>} args - Instantiation args for the new actor (props)
    * @returns {ActorRef} - A reference to the newly created actor
    */
-  protected actorOf(
-    actorType: ActorType,
+  public actorOf<T extends Actor>(
+    actorType: ActorType<T>,
     /* tslint:disable-next-line no-any */
     ...args: Array<any>,
   ): ActorRef {
-    let actor: Actor;
-    try {
-      actor = new actorType(...args);
-      actor.path = `${this.path}/${actor.name}`;
-      actor.system = this.system;
-      this.children.add(actor);
-      return new ActorRef(actor.path);
-    } finally {
-      actor = null;
-    }
+    const actor: Actor = new actorType(...args);
+    actor.path = `${this.path}/${actor.name}`;
+    actor.system = this.system;
+    this.children.add(actor);
+    return new ActorRef(actor.path);
   }
 
   /**

@@ -4,10 +4,10 @@
 
 import { Observable } from 'rxjs/Observable';
 
-import { TreeUtils } from '../../src/system/systemTree';
-import { INode, ITree } from '../../src/system/systemTree.d';
+import { TreeUtils } from '../../src/system/actorTree';
+import { INode, ITree } from '../../src/system/actorTree.d';
 
-describe('SystemTree', () => {
+describe('ActorTree', () => {
 
   describe('TreeUtils', () => {
 

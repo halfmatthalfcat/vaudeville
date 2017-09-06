@@ -2,15 +2,15 @@
  * Reference Ask Actor used in testing
  */
 
-import { IActorMsg, ReceiveLogic } from '../../src/actor/actor';
-import { Actor } from '../../src/actor/actor.ts';
+import { Actor } from '../../src/actor/actor';
+import { ActorMsg, ClientReceiveLogic } from '../../src/actor/actor.d';
 
 export class AskTestActor extends Actor {
 
-  protected receive: ReceiveLogic = {
-    SomeClass: ({ msg, resolve }: IActorMsg) => resolve(msg),
-    1: ({ msg, resolve }: IActorMsg) => resolve(msg),
-    someString: ({ msg, resolve }: IActorMsg) => resolve(msg),
+  receive: ClientReceiveLogic = {
+    SomeClass: ({ msg, resolve }: ActorMsg) => resolve(msg),
+    1: ({ msg, resolve }: ActorMsg) => resolve(msg),
+    someString: ({ msg, resolve }: ActorMsg) => resolve(msg),
     _: ({ msg, resolve }) => resolve(msg),
   };
 

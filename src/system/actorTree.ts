@@ -3,17 +3,28 @@
  */
 
 import {
+  IActorTree,
   INode,
-  ISystemTree,
   ITree,
-} from './systemTree.d';
+} from './actorTree.d';
 
-export class SystemTree implements ISystemTree {
+export class ActorTree implements IActorTree {
 
   private tree: ITree = {};
 
-  public nodeExists(path: string): INode | null {
+  public getNode(path: string): INode | null {
     return TreeUtils.getNode(path, this.tree);
+  }
+
+  public addNode(
+    path: string,
+    node: INode,
+  ): void {
+    this.tree = TreeUtils.addNode(path, this.tree, node);
+  }
+
+  public removeNode(path: string): void {
+    this.tree = TreeUtils.removeNode(path, this.tree);
   }
 
 }

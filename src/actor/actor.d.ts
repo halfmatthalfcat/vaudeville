@@ -17,8 +17,6 @@ interface ClientReceiveLogic {
 export interface IActor {
   name: string;
   path: string;
-
-  actorOf: (actor: IActor) => IActor;
 }
 
 export interface ActorMsg<A, B> {
