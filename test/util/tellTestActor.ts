@@ -2,15 +2,16 @@
  * Reference Tell Actor used in testing
  */
 
-import { IActorMsg, ReceiveLogic } from '../../src/actor/actor';
-import { Actor } from '../../src/actor/actor.ts';
+import { Actor } from '../../src/actor/actor';
+import { ClientReceiveLogic } from '../../src/actor/actor.d';
+import { ActorRegistry } from '../../src/system/util/actorRegistry';
 
 export class TellTestActor extends Actor {
 
-  protected receive: ReceiveLogic = {
-    SomeClass: ({ msg }: IActorMsg) => this.processClass(msg),
-    1: ({ msg }: IActorMsg) => this.processInt(msg),
-    someString: ({ msg }: IActorMsg) => this.processString(msg),
+  protected receive: ClientReceiveLogic = {
+    SomeClass: ({ msg }) => this.processClass(msg),
+    1: ({ msg }) => this.processInt(msg),
+    someString: ({ msg }) => this.processString(msg),
     _: ({ msg }) => this.processCatchAll(msg),
   };
 
@@ -27,3 +28,7 @@ export class TellTestActor extends Actor {
   public processCatchAll(something: any): void { return; }
 
 }
+
+ActorRegistry
+  .getInstance()
+  .register(TellTestActor);

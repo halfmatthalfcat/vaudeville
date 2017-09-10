@@ -70,8 +70,8 @@ export abstract class Actor implements IActor {
    * @param {Array<any>} args - Instantiation args for the new actor (props)
    * @returns {ActorRef} - A reference to the newly created actor
    */
-  public actorOf<T extends Actor>(
-    actorType: ActorType<T>,
+  public actorOf(
+    actorType: ActorType,
     /* tslint:disable-next-line no-any */
     ...args: Array<any>,
   ): ActorRef {

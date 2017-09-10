@@ -3,11 +3,14 @@
  */
 
 import * as cluster from 'cluster';
+import * as os from 'os';
 
-import { IActor } from '../actor/actor.d';
+import { ActorTree } from './util/actorTree';
 
-import { ActorTree } from './actorTree';
 import { IActorSystem } from './system.d';
+
+import { PING } from './comm/gossip';
+import { masterRouter } from './routing/masterRouter';
 
 export class ActorSystem implements IActorSystem {
 
@@ -16,26 +19,24 @@ export class ActorSystem implements IActorSystem {
   constructor(
     public systemName: string,
   ) {
-    cluster
-      .setupMaster({
-        exec: './dist/src/system/stageManager.js',
-      });
+    console.log(`Booting up Vaudeville system ${systemName} on ${os.platform()}(${os.arch()})`);
 
-    cluster
-      .on('message', (worker: cluster.Worker, message: object) => {
-        console.log(`${worker.id}: ${JSON.stringify(message)}`);
-      });
+    cluster.on('message', masterRouter(this.actorTree));
   }
 
   public start(): void {
     this
       .spawnThread()
       .then((worker: cluster.Worker) => {
-        console.log(`Worker ${worker.id} is online`);
+        worker.send({ gossipType: PING, payload: null });
       });
   }
 
   private spawnThread(): Promise<cluster.Worker> {
+    cluster
+      .setupMaster({
+        exec: './stageManager.js',
+      });
     return new Promise<cluster.Worker>((resolve) => {
       let worker: cluster.Worker;
       worker = cluster

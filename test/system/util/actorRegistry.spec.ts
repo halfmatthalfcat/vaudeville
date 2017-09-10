@@ -3,8 +3,8 @@
  */
 // tslint:disable no-any
 
-import { ActorRegistry } from '../../src/system/actorRegistry';
-import { AskTestActor } from '../util/askTestActor';
+import { ActorRegistry } from '../../../src/system/util/actorRegistry';
+import { AskTestActor } from '../../util/askTestActor';
 
 describe('ActorRegistry', () => {
 

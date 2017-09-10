@@ -4,16 +4,14 @@
  * - Reacts to messages from the actor system
  */
 
-import * as cluster from 'cluster';
+import { stageManagerRouter } from './routing/stageManagerRouter';
 
 export class StageManager {
 
   private readonly pid: number = process.pid;
 
-  private readonly id: string = cluster.worker.id;
-
   constructor() {
-    cluster.worker.send('Hello');
+    process.on('message', stageManagerRouter);
   }
 
 }

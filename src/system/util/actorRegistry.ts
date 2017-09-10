@@ -2,7 +2,7 @@
  * Holds instances to Actor classes for instantiation
  */
 
-import { ActorType } from '../actor/actor';
+import { ActorType } from '../../actor/actor';
 
 /* tslint:disable-next-line interface-over-type-literal */
 type ActorRegister = { [actorClassName: string]: ActorType };

@@ -5,7 +5,7 @@
 
 import { Observable } from 'rxjs/Observable';
 
-import { ActorMsg } from '../actor/actor.d';
+import { ActorMsg } from '../../actor/actor';
 
 export interface IActorTree {
   getNode: (path: string) => INode | null;

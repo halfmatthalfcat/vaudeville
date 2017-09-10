@@ -4,6 +4,7 @@
 
 import { Actor } from '../../src/actor/actor';
 import { ActorMsg, ClientReceiveLogic } from '../../src/actor/actor.d';
+import { ActorRegistry } from '../../src/system/util/actorRegistry';
 
 export class AskTestActor extends Actor {
 
@@ -19,3 +20,7 @@ export class AskTestActor extends Actor {
   }
 
 }
+
+ActorRegistry
+  .getInstance()
+  .register(AskTestActor);

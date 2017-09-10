@@ -6,16 +6,26 @@ import {
   IActorTree,
   INode,
   ITree,
-} from './actorTree.d';
+} from './actorTree';
 
 export class ActorTree implements IActorTree {
 
   private tree: ITree = {};
 
+  /**
+   * Get a node in the current tree or return null
+   * @param {string} path - The path to the desired node
+   * @return {INode | null} - The found node or null if it doesn't exist
+   */
   public getNode(path: string): INode | null {
     return TreeUtils.getNode(path, this.tree);
   }
 
+  /**
+   * Add a node to the current tree
+   * @param {string} path - The path to add the desired node
+   * @param {INode} node - The node to add
+   */
   public addNode(
     path: string,
     node: INode,
@@ -23,6 +33,10 @@ export class ActorTree implements IActorTree {
     this.tree = TreeUtils.addNode(path, this.tree, node);
   }
 
+  /**
+   * Remove a node from the current tree at the desired path
+   * @param {string} path - The path to the node to remove
+   */
   public removeNode(path: string): void {
     this.tree = TreeUtils.removeNode(path, this.tree);
   }
