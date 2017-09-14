@@ -3,6 +3,7 @@
  */
 
 const path =        require("path");
+const ts =          require("typescript");
 const tslint =      require("tslint");
 const gulpTsLint =  require("gulp-tslint");
 
@@ -22,9 +23,6 @@ module.exports = (gulp, rootDir) => {
         configuration: path.join(rootDir, "/tslint.json"),
         formatter: "prose",
         tslint: tslint,
-        program: tslint.Linter.createProgram(
-          path.join(rootDir, "/tsconfig.json")
-        )
       }))
       .pipe(gulpTsLint.report({
         emitError: true,
