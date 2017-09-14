@@ -2,29 +2,38 @@
  * Manages a child process
  */
 
+import { ChildProcess } from 'child_process';
 import * as cluster from 'cluster';
-import * as Process from 'process';
+import * as path from 'path';
 
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+import { IGossip } from './comm/comm';
+import { IGossipMessage } from './system.d';
 
 export class Thread {
 
-  public pid: number = null;
+  public pid: number;
 
-  private process: Process;
-  private subject: Subject<[number, number]> = new Subject<[number, number]>();
+  private process: ChildProcess;
+
+  private message: Subject<IGossipMessage<IGossip>> = new Subject<IGossipMessage<IGossip>>();
+  private restart: Subject<[number, number]> = new Subject<[number, number]>();
 
   constructor(
     private execPath: string,
     private autoRestart: boolean = true,
   ) {
     cluster.setupMaster({
-      exec: execPath,
-      silent: true,
+      exec: path.join(__dirname, execPath),
+      silent: false,
     });
 
     this.spawn();
+  }
+
+  public send(msg: IGossip): void {
+    this.process.send(msg);
   }
 
   /**
@@ -43,7 +52,11 @@ export class Thread {
    * @return {Observable<[number, number]>} - Observable that emits on restart events with old/new pid
    */
   public onRestart(): Observable<[number, number]> {
-    return this.subject.asObservable();
+    return this.restart.asObservable();
+  }
+
+  public onMessage(): Observable<IGossipMessage<IGossip>> {
+    return this.message.asObservable();
   }
 
   /**
@@ -51,18 +64,19 @@ export class Thread {
    * Spawns a new thread and attaches relevant listeners
    * @return {cluster.Worker} - The worker object
    */
-  private spawn(): cluster.Worker {
+  private spawn(): void {
     // Create new worker
     const thread: cluster.Worker = cluster.fork();
     this.process = thread.process;
     // Broadcast pid change if not the first spawn
-    if (this.pid) { this.subject.next([this.pid, thread.process.pid]); }
+    if (this.pid) { this.restart.next([this.pid, thread.process.pid]); }
     // Set new pid locally
     this.pid = thread.process.pid;
     // Setup new handlers
     thread.on('exit', this.onExit);
     thread.on('error', this.onError);
     thread.on('disconnect', this.onDisconnect);
+    thread.on('message', (message: IGossip) => this.message.next({ process: this.process, message }));
   }
 
   /**
@@ -73,7 +87,8 @@ export class Thread {
    * TODO: Add specific code/signal handling
    */
   private onExit: (code: number, signal: string) => void =
-    (code: number, signal: string) => {
+    (code: number/* , signal: string */) => {
+      console.log(code);
       if (this.autoRestart && code !== 0) { this.spawn(); }
     }
 
@@ -84,7 +99,7 @@ export class Thread {
    * TODO: Add specific error handling
    */
   private onError: (error: Error) => void =
-    (error: Error) => {
+    (/* error: Error */) => {
       if (this.autoRestart) { this.spawn(); }
     }
 

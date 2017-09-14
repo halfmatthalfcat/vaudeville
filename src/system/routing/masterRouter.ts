@@ -8,14 +8,18 @@ import { IGossip } from '../comm/comm';
 
 import { PING, PONG } from '../comm/gossip';
 
-import { ActorTree } from '../util/actorTree.ts';
+import { ActorTree } from '../util/actorTree';
 
-export const masterRouter: (actorTree: ActorTee) => (worker: cluster.Worker, message: object) => void =
-  (actorTree: ActorTree) => {
-    return (worker: cluster.Worker, message: IGossip) => {
+import { IGossipMessage } from '../system.d';
+
+export const masterRouter: (actorTree: ActorTree) => (gossipMessage: IGossipMessage<IGossip>) => void =
+  (/* actorTree: ActorTree */) => {
+    return ({ process, message }) => {
+      console.log(message);
       switch (message.gossipType) {
-        case PING: worker.send({ gossipType: PONG, payload: null }); break;
-        case PONG: break;
+        case PING: process.send({ gossipType: PONG, payload: null }); break;
+        case PONG: console.log(`Got PONG from ${process.pid}`); break;
+        default: break;
       }
     };
   };

@@ -2,47 +2,41 @@
  * Vaudeville Actor System
  */
 
-import * as cluster from 'cluster';
+import 'rxjs/add/operator/merge';
+
 import * as os from 'os';
+
+import { Observable } from 'rxjs/Observable';
 
 import { ActorTree } from './util/actorTree';
 
-import { IActorSystem } from './system.d';
-
+import { IGossip } from './comm/comm';
 import { PING } from './comm/gossip';
+
 import { masterRouter } from './routing/masterRouter';
+
+import { IActorSystem, IGossipMessage } from './system.d';
+
+import { Thread } from './thread';
 
 export class ActorSystem implements IActorSystem {
 
   private actorTree: ActorTree = new ActorTree();
 
+  private masterBus: Observable<IGossipMessage<IGossip>> =
+    Observable.create(() => void 0);
+
   constructor(
     public systemName: string,
   ) {
     console.log(`Booting up Vaudeville system ${systemName} on ${os.platform()}(${os.arch()})`);
-
-    cluster.on('message', masterRouter(this.actorTree));
   }
 
-  public start(): void {
-    this
-      .spawnThread()
-      .then((worker: cluster.Worker) => {
-        worker.send({ gossipType: PING, payload: null });
-      });
-  }
-
-  private spawnThread(): Promise<cluster.Worker> {
-    cluster
-      .setupMaster({
-        exec: './stageManager.js',
-      });
-    return new Promise<cluster.Worker>((resolve) => {
-      let worker: cluster.Worker;
-      worker = cluster
-        .fork()
-        .on('online', () => resolve(worker));
-    });
+  public start = () => {
+    const thread: Thread = new Thread('/stageManager.js', false);
+    this.masterBus = this.masterBus.merge(thread.onMessage());
+    this.masterBus.subscribe(masterRouter(this.actorTree));
+    thread.send({ gossipType: PING, payload: null });
   }
 
 }

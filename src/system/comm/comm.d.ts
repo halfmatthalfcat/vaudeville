@@ -4,7 +4,7 @@
 
 export type GossipType = string;
 
-export interface IGossip<T extends object> {
+export interface IGossip {
   gossipType: GossipType;
-  payload: T;
+  payload: object | null;
 }
