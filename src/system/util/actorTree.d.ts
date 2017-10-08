@@ -5,7 +5,7 @@
 
 import { Observable } from 'rxjs/Observable';
 
-import { ActorMsg } from '../../actor/actor';
+import { ActorMsg } from '../../actor/actor.d';
 
 export interface IActorTree {
   getNode: (path: string) => INode | null;
@@ -21,7 +21,7 @@ export interface ITree {
 }
 
 export interface INode {
-  mailbox: Observable<any>;
   children: ITree;
-  thread?: string;
+  thread?: number;
+  send?: <A, B>(msg: ActorMsg<A, B>) => void;
 }

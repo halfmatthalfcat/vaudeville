@@ -8,31 +8,30 @@ import * as path from 'path';
 
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
-import { IGossip } from './comm/comm';
-import { IGossipMessage } from './system.d';
+import { IChildMessage, IGossip, IMessage } from './comm/comm';
 
 export class Thread {
 
-  public pid: number;
-
   private process: ChildProcess;
 
-  private message: Subject<IGossipMessage<IGossip>> = new Subject<IGossipMessage<IGossip>>();
+  private message: Subject<IChildMessage> = new Subject<IChildMessage>();
   private restart: Subject<[number, number]> = new Subject<[number, number]>();
+
+  public pid: number;
 
   constructor(
     private execPath: string,
     private autoRestart: boolean = true,
   ) {
     cluster.setupMaster({
-      exec: path.join(__dirname, execPath),
+      exec: path.join(__dirname, `/${execPath}.js`),
       silent: false,
     });
 
     this.spawn();
   }
 
-  public send(msg: IGossip): void {
+  public send(msg: IMessage): void {
     this.process.send(msg);
   }
 
@@ -55,7 +54,7 @@ export class Thread {
     return this.restart.asObservable();
   }
 
-  public onMessage(): Observable<IGossipMessage<IGossip>> {
+  public onMessage(): Observable<IChildMessage> {
     return this.message.asObservable();
   }
 

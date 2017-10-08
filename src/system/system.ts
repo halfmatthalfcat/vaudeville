@@ -2,44 +2,79 @@
  * Vaudeville Actor System
  */
 
-import 'rxjs/add/operator/merge';
-
 import * as os from 'os';
 
-import { Observable } from 'rxjs/Observable';
+import { Bus } from './bus';
 
 import { ActorTree } from './util/actorTree';
 
-import { IGossip } from './comm/comm';
-import { PING } from './comm/gossip';
+import { SystemCLI } from './cli/cli';
 
-import { masterRouter } from './routing/masterRouter';
+import { childRouter, systemRouter } from './routing/systemRouters';
 
-import { IActorSystem, IGossipMessage } from './system.d';
+import { IActorSystem } from './system.d';
 
 import { Thread } from './thread';
 
+import { Actor, ActorType } from '../actor/actor';
+import { ActorRef } from '../actor/actorRef';
+
+import { IMessage } from './comm/comm.d';
+import { PING, TEST } from './comm/gossip';
+
 export class ActorSystem implements IActorSystem {
 
+  /* Holds actor hierarchy */
   private actorTree: ActorTree = new ActorTree();
 
-  private masterBus: Observable<IGossipMessage<IGossip>> =
-    Observable.create(() => void 0);
+  /* Master communication bus */
+  private bus: Bus<IMessage> = new Bus<IMessage>(
+    systemRouter,
+    childRouter(this.actorTree),
+  );
 
   constructor(
     public systemName: string,
   ) {
     console.log(`Booting up Vaudeville system ${systemName} on ${os.platform()}(${os.arch()})`);
+
+    /* tslint:disable-next-line no-unused-expression */
+    if (process.argv.includes('-c')) { new SystemCLI(systemName); }
   }
 
-  public start = () => {
-    const thread: Thread = new Thread('/stageManager.js', false);
-    this.masterBus = this.masterBus.merge(thread.onMessage());
-    this.masterBus.subscribe(masterRouter(this.actorTree));
-    thread.send({ gossipType: PING, payload: null });
+  /**
+   * Start up the server, create threads
+   */
+  public start(): void {
+    this.addThread();
+  }
+
+  /**
+   * Create "top level" actors in a system
+   * Abstracts away actor creation so it can be created on other threads
+   * @param {ActorType} actorType - The class of the new actor
+   * @param {string} actorName - The name of the actor (used in building the actor path)
+   * @param {Array<any>} args - Instantiation args for the new actor (props)
+   * @returns {ActorRef} - A reference to the newly created actor
+   */
+  public actorOf(
+    actorType: ActorType,
+    actorName: string = actorType.name,
+    /* tslint:disable-next-line no-any */
+    ...args: Array<any>,
+  ): ActorRef {
+    this.bus.send({ message: { gossipType: PING, payload: null }});
+    return new ActorRef(`/user/${actorName}`);
+  }
+
+  private addThread(): void {
+    const thread: Thread = new Thread('stageManager', false);
+    this.bus.addSource(thread.onMessage());
+    this.bus.send({ message: { gossipType: TEST, payload: null }});
+    setInterval(() => thread.send({ message: { gossipType: PING, payload: null }}), 1000);
   }
 
 }
 
 /* tslint:disable-next-line no-unused-expression */
-new ActorSystem('System').start();
+new ActorSystem('Vaudeville').start();

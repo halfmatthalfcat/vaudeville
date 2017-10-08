@@ -2,13 +2,15 @@
  * Stage manager router
  */
 
-import { IGossip } from '../comm/comm';
-
+import { IMessage } from '../comm/comm';
 import { PING, PONG } from '../comm/gossip';
 
-export const stageManagerRouter: (message: IGossip) => void =
-  (message: IGossip) => {
-    switch (message.gossipType) {
-      case PING: console.log(`Sending Pong Back`); process.send({ gossipType: PONG, payload: null });
-    }
+import { RouterLogic } from './routing';
+
+export const stageManagerRouter: (message: IMessage) => RouterLogic =
+  ({ message }) => {
+    console.log(`In Child Router: ${JSON.stringify(message)}`);
+    return {
+      [PING]: () => process.send({ gossipType: PONG, payload: null }),
+    };
   };

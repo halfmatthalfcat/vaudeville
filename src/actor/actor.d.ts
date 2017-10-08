@@ -8,10 +8,11 @@ interface BaseReceiveLogic {
 }
 
 interface ClientReceiveLogic {
-  [typeName: string]: (msg: ActorMsg) => void;
-  [typeName: number]: (msg: ActorMsg) => void;
+  [typeName: string]: <A, B>(msg: ActorMsg<A, B>) => void;
+  [typeName: number]: <A, B>(msg: ActorMsg<A, B>) => void;
   // Catch-all case
-  _: (msg: ActorMsg) => void;
+  // tslint:disable-next-line no-any
+  _: (msg: ActorMsg<any, any>) => void;
 }
 
 export interface IActor {

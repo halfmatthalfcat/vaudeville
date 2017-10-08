@@ -5,8 +5,6 @@
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
-import { ActorSystem } from '../system/system';
-
 import { ActorMsg, ClientReceiveLogic, IActor } from './actor.d';
 import { ActorRef } from './actorRef';
 
@@ -15,11 +13,11 @@ export type ActorType = { new (...args: Array<any>): Actor };
 
 export abstract class Actor implements IActor {
 
+  /* Reference to self to avoid GC until actor is killed */
+  private self: this = this;
+
   /* Implementation defined message handler */
   protected abstract receive: ClientReceiveLogic;
-
-  /* Reference to the attached actor system this actor resides in */
-  protected system: ActorSystem;
 
   /* Actor message mailbox */
   /* tslint:disable-next-line no-any */
@@ -31,13 +29,11 @@ export abstract class Actor implements IActor {
   /* Path of this actor to the system root */
   public path: string;
 
-  /* Reference to self to avoid GC until actor is killed */
-  private self: this = this;
-
   constructor(
     public name: string,
   ) {
-    this.mailbox.subscribe((actorMsg: ActorMsg) => this.runReceive(actorMsg));
+    /* tslint:disable-next-line no-any */
+    this.mailbox.subscribe((actorMsg: ActorMsg<any, any>) => this.runReceive(actorMsg));
   }
 
   /**
@@ -77,7 +73,6 @@ export abstract class Actor implements IActor {
   ): ActorRef {
     const actor: Actor = new actorType(...args);
     actor.path = `${this.path}/${actor.name}`;
-    actor.system = this.system;
     this.children.add(actor);
     return new ActorRef(actor.path);
   }
@@ -86,7 +81,8 @@ export abstract class Actor implements IActor {
    * When a message is received by implemented actor,
    * run the defined ReceiveLogic
    */
-  private runReceive(actorMsg: ActorMsg): void {
+  /* tslint:disable-next-line no-any */
+  private runReceive(actorMsg: ActorMsg<any, any>): void {
     if (
       typeof actorMsg.msg === 'object' &&
       this.receive.hasOwnProperty(actorMsg.msg.constructor.name)

@@ -6,7 +6,7 @@ import {
   IActorTree,
   INode,
   ITree,
-} from './actorTree';
+} from './actorTree.d';
 
 export class ActorTree implements IActorTree {
 
