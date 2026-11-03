@@ -1,0 +1,138 @@
+data: {"id":"evt_1a1cbe3f00019vkzbN8ZcaG4pP","type":"server.connected","properties":{}}
+
+data: {"id":"evt_1a1cbe77100139t5dRTcvvLnOB","type":"session.created","properties":{"sessionID":"ses_e5e34188fffeksXn5Cl32bR4Mq","info":{"id":"ses_e5e34188fffeksXn5Cl32bR4Mq","slug":"sunny-planet","version":"1.19.5","projectID":"global","directory":"/work","path":"","title":"t","cost":0,"tokens":{"input":0,"output":0,"reasoning":0,"cache":{"read":0,"write":0}},"time":{"created":1793715857264,"updated":1793715857264}}}}
+
+data: {"id":"evt_1a1cbe7a5001Kh1UMM7wSYjws5","type":"session.updated","properties":{"sessionID":"ses_e5e34188fffeksXn5Cl32bR4Mq","info":{"id":"ses_e5e34188fffeksXn5Cl32bR4Mq","slug":"sunny-planet","projectID":"global","directory":"/work","path":"","title":"t","agent":"broke","model":{"id":"broke-1","providerID":"broke","variant":"default"},"version":"1.19.5","cost":0,"tokens":{"input":0,"output":0,"reasoning":0,"cache":{"read":0,"write":0}},"time":{"created":1793715857264,"updated":1793715857314}}}}
+
+data: {"id":"evt_1a1cbe7ae0011HcO5kIHZw1Pa7","type":"message.updated","properties":{"sessionID":"ses_e5e34188fffeksXn5Cl32bR4Mq","info":{"id":"msg_1a1cbe7a2001ZEcUYKk8r8kiyR","role":"user","sessionID":"ses_e5e34188fffeksXn5Cl32bR4Mq","time":{"created":1793715857314},"agent":"broke","model":{"providerID":"broke","modelID":"broke-1"}}}}
+
+data: {"id":"evt_1a1cbe7b1001X5Gd84yU50VGFn","type":"message.part.updated","properties":{"sessionID":"ses_e5e34188fffeksXn5Cl32bR4Mq","part":{"type":"text","text":"hello","messageID":"msg_1a1cbe7a2001ZEcUYKk8r8kiyR","sessionID":"ses_e5e34188fffeksXn5Cl32bR4Mq","id":"prt_1a1cbe7ac0011ufd2LUQAJ5Mkd"},"time":1793715857329}}
+
+data: {"id":"evt_1a1cbe7b6001Mv2Es5Lk9UwhLx","type":"session.updated","properties":{"sessionID":"ses_e5e34188fffeksXn5Cl32bR4Mq","info":{"id":"ses_e5e34188fffeksXn5Cl32bR4Mq","slug":"sunny-planet","projectID":"global","directory":"/work","path":"","title":"t","agent":"broke","model":{"id":"broke-1","providerID":"broke","variant":"default"},"version":"1.19.5","cost":0,"tokens":{"input":0,"output":0,"reasoning":0,"cache":{"read":0,"write":0}},"time":{"created":1793715857264,"updated":1793715857333}}}}
+
+data: {"id":"evt_1a1cbe7bd0018ln7NOiTN9YLwo","type":"session.status","properties":{"sessionID":"ses_e5e34188fffeksXn5Cl32bR4Mq","status":{"type":"busy"}}}
+
+data: {"id":"evt_1a1cbebc0001fKAQMotsoVuaL2","type":"message.updated","properties":{"sessionID":"ses_e5e34188fffeksXn5Cl32bR4Mq","info":{"id":"msg_1a1cbebbf001rpVsF0cHOy6qq9","parentID":"msg_1a1cbe7a2001ZEcUYKk8r8kiyR","role":"assistant","mode":"broke","agent":"broke","path":{"cwd":"/work","root":"/work"},"cost":0,"tokens":{"input":0,"output":0,"reasoning":0,"cache":{"read":0,"write":0}},"modelID":"broke-1","providerID":"broke","time":{"created":1793715858367},"sessionID":"ses_e5e34188fffeksXn5Cl32bR4Mq"}}}
+
+data: {"id":"evt_1a1cbebf20015wrqSJ1bAYau7v","type":"session.updated","properties":{"sessionID":"ses_e5e34188fffeksXn5Cl32bR4Mq","info":{"id":"ses_e5e34188fffeksXn5Cl32bR4Mq","slug":"sunny-planet","projectID":"global","directory":"/work","path":"","title":"t","agent":"broke","model":{"id":"broke-1","providerID":"broke","variant":"default"},"version":"1.19.5","summary":{"additions":0,"deletions":0,"files":0},"cost":0,"tokens":{"input":0,"output":0,"reasoning":0,"cache":{"read":0,"write":0}},"time":{"created":1793715857264,"updated":1793715858417}}}}
+
+data: {"id":"evt_1a1cbebf6001xJ6vSqofFmBy0t","type":"session.diff","properties":{"sessionID":"ses_e5e34188fffeksXn5Cl32bR4Mq","diff":[]}}
+
+data: {"id":"evt_1a1cbebf900101k398u8mj1SEf","type":"message.updated","properties":{"sessionID":"ses_e5e34188fffeksXn5Cl32bR4Mq","info":{"role":"user","time":{"created":1793715857314},"agent":"broke","model":{"providerID":"broke","modelID":"broke-1"},"id":"msg_1a1cbe7a2001ZEcUYKk8r8kiyR","sessionID":"ses_e5e34188fffeksXn5Cl32bR4Mq","summary":{"diffs":[]}}}}
+
+data: {"id":"evt_1a1cbec33001ZpDE3aWixC70wF","type":"plugin.added","properties":{"id":"core/config-reference"}}
+
+data: {"id":"evt_1a1cbec34001hXqcHlw236mVuq","type":"plugin.added","properties":{"id":"agent"}}
+
+data: {"id":"evt_1a1cbec35001c4SiwcJaFKGLRm","type":"plugin.added","properties":{"id":"command"}}
+
+data: {"id":"evt_1a1cbec36001996UkQW9feaK9e","type":"plugin.added","properties":{"id":"skill"}}
+
+data: {"id":"evt_1a1cbec37001JWHSkWjCqiSucF","type":"plugin.added","properties":{"id":"models-dev"}}
+
+data: {"id":"evt_1a1cbec38001q1gDjPECJCBJbW","type":"plugin.added","properties":{"id":"config-agent"}}
+
+data: {"id":"evt_1a1cbec39001aYzhjy4PN3h71n","type":"plugin.added","properties":{"id":"config-command"}}
+
+data: {"id":"evt_1a1cbec3a0015xi0e7Ke6oIfyg","type":"plugin.added","properties":{"id":"config-skill"}}
+
+data: {"id":"evt_1a1cbec3a002Iv5rnCncGgjJDI","type":"plugin.added","properties":{"id":"alibaba"}}
+
+data: {"id":"evt_1a1cbec3c001LshdFWXk8USfQW","type":"plugin.added","properties":{"id":"amazon-bedrock"}}
+
+data: {"id":"evt_1a1cbec3d001Gp6pZoJYj2AdAl","type":"plugin.added","properties":{"id":"anthropic"}}
+
+data: {"id":"evt_1a1cbec3e00189jFDunGSpdZTF","type":"plugin.added","properties":{"id":"azure-cognitive-services"}}
+
+data: {"id":"evt_1a1cbec44001MhN8xAvZL5Mn2b","type":"plugin.added","properties":{"id":"azure"}}
+
+data: {"id":"evt_1a1cbec450018G47e7VAk6vYdM","type":"plugin.added","properties":{"id":"cerebras"}}
+
+data: {"id":"evt_1a1cbec45002aZYqDcnj1MF32f","type":"plugin.added","properties":{"id":"cloudflare-ai-gateway"}}
+
+data: {"id":"evt_1a1cbec46001JnC34QhnSuMOd2","type":"plugin.added","properties":{"id":"cloudflare-workers-ai"}}
+
+data: {"id":"evt_1a1cbec47001ODjlu0wd4yW54U","type":"plugin.added","properties":{"id":"cohere"}}
+
+data: {"id":"evt_1a1cbec480017yTeR40ssneMTj","type":"plugin.added","properties":{"id":"deepinfra"}}
+
+data: {"id":"evt_1a1cbec48002uufsOXKtBz8cwv","type":"plugin.added","properties":{"id":"gateway"}}
+
+data: {"id":"evt_1a1cbec49001PkHcC1nm0tAugI","type":"plugin.added","properties":{"id":"github-copilot"}}
+
+data: {"id":"evt_1a1cbec49002LEzj3D9geLJO0m","type":"plugin.added","properties":{"id":"gitlab"}}
+
+data: {"id":"evt_1a1cbec4a001lyih0ouSmco71p","type":"plugin.added","properties":{"id":"google"}}
+
+data: {"id":"evt_1a1cbec4b001nXypzRFfyBKXfu","type":"plugin.added","properties":{"id":"google-vertex-anthropic"}}
+
+data: {"id":"evt_1a1cbec4c001gieSbCio4sx2Z1","type":"plugin.added","properties":{"id":"google-vertex"}}
+
+data: {"id":"evt_1a1cbec4d001HTYWck8mle2ig0","type":"plugin.added","properties":{"id":"groq"}}
+
+data: {"id":"evt_1a1cbec52001XSkjX0VM9Opwjt","type":"plugin.added","properties":{"id":"kilo"}}
+
+data: {"id":"evt_1a1cbec53001FmB63NnGSGhpq1","type":"plugin.added","properties":{"id":"llmgateway"}}
+
+data: {"id":"evt_1a1cbec54001nHmGTaOZnx0O4R","type":"plugin.added","properties":{"id":"mistral"}}
+
+data: {"id":"evt_1a1cbec54002DePRAxDtaek19M","type":"plugin.added","properties":{"id":"nvidia"}}
+
+data: {"id":"evt_1a1cbec57001hgjzAAEde22I6m","type":"plugin.added","properties":{"id":"opencode"}}
+
+data: {"id":"evt_1a1cbec58001bbIuJ4M5mYavEk","type":"plugin.added","properties":{"id":"snowflake-cortex"}}
+
+data: {"id":"evt_1a1cbec59001SJiWUb6CjTV1A9","type":"plugin.added","properties":{"id":"openai-compatible"}}
+
+data: {"id":"evt_1a1cbec5a001pRvIWPq2wrZ8lB","type":"plugin.added","properties":{"id":"openai"}}
+
+data: {"id":"evt_1a1cbec5a002RXHAAFUbMDVJZS","type":"plugin.added","properties":{"id":"openrouter"}}
+
+data: {"id":"evt_1a1cbec5b001iYuXCy6ledcbEx","type":"plugin.added","properties":{"id":"perplexity"}}
+
+data: {"id":"evt_1a1cbec5c0012g43MKr868ZGm7","type":"plugin.added","properties":{"id":"sap-ai-core"}}
+
+data: {"id":"evt_1a1cbec5c002ZjrFLlLB8Xq1FG","type":"plugin.added","properties":{"id":"togetherai"}}
+
+data: {"id":"evt_1a1cbed3b001qr2939zrXMJeBE","type":"catalog.updated","properties":{}}
+
+data: {"id":"evt_1a1cbed3c001MNX4I5vXQ3n7kH","type":"plugin.added","properties":{"id":"vercel"}}
+
+data: {"id":"evt_1a1cbed3c002hoNQ2zTdUPnIX0","type":"plugin.added","properties":{"id":"venice"}}
+
+data: {"id":"evt_1a1cbed3d001Nhrw74eN76I15q","type":"plugin.added","properties":{"id":"xai"}}
+
+data: {"id":"evt_1a1cbed3e001DUhqci1vM5XRGa","type":"plugin.added","properties":{"id":"zenmux"}}
+
+data: {"id":"evt_1a1cbed3e002HByXlnbuye610K","type":"plugin.added","properties":{"id":"dynamic-provider"}}
+
+data: {"id":"evt_1a1cbed41001UsHRp3w0te6xvx","type":"plugin.added","properties":{"id":"config-plugin"}}
+
+data: {"id":"evt_1a1cbed42001WhxHYuz1TUrZZX","type":"plugin.added","properties":{"id":"config-provider"}}
+
+data: {"id":"evt_1a1cbed42002lZz2hOjdffssmY","type":"plugin.added","properties":{"id":"variant"}}
+
+data: {"id":"evt_1a1cbed44001uBS1Q81ea8xzlN","type":"reference.updated","properties":{}}
+
+data: {"id":"evt_1a1cbed6e001WQqgJaRiMRds5b","type":"integration.updated","properties":{}}
+
+data: {"id":"evt_1a1cbee3b001jwoMX1DDrymdeB","type":"catalog.updated","properties":{}}
+
+data: {"id":"evt_1a1cbee75001Y5h6BqwJlVLn2j","type":"session.status","properties":{"sessionID":"ses_e5e34188fffeksXn5Cl32bR4Mq","status":{"type":"busy"}}}
+
+data: {"id":"evt_1a1cbeec0001cIfvZmfuBUX85g","type":"session.error","properties":{"sessionID":"ses_e5e34188fffeksXn5Cl32bR4Mq","error":{"name":"APIError","data":{"message":"Insufficient credits. This account never purchased credits.","statusCode":402,"isRetryable":false,"responseHeaders":{"connection":"keep-alive","content-type":"application/json","date":"Tue, 03 Nov 2026 14:24:19 GMT","keep-alive":"timeout=5","transfer-encoding":"chunked"},"responseBody":"{\"error\":{\"message\":\"Insufficient credits. This account never purchased credits.\",\"code\":402}}","metadata":{"url":"http://127.0.0.1:18081/v1/chat/completions"}}}}}
+
+data: {"id":"evt_1a1cbeec10014uPfIjkIiUERaO","type":"session.status","properties":{"sessionID":"ses_e5e34188fffeksXn5Cl32bR4Mq","status":{"type":"idle"}}}
+
+data: {"id":"evt_1a1cbeec2001zdCUIfF8qDOd4X","type":"session.idle","properties":{"sessionID":"ses_e5e34188fffeksXn5Cl32bR4Mq"}}
+
+data: {"id":"evt_1a1cbeedd001gEHIGxdViNmRIu","type":"message.updated","properties":{"sessionID":"ses_e5e34188fffeksXn5Cl32bR4Mq","info":{"id":"msg_1a1cbebbf001rpVsF0cHOy6qq9","parentID":"msg_1a1cbe7a2001ZEcUYKk8r8kiyR","role":"assistant","mode":"broke","agent":"broke","path":{"cwd":"/work","root":"/work"},"cost":0,"tokens":{"input":0,"output":0,"reasoning":0,"cache":{"read":0,"write":0}},"modelID":"broke-1","providerID":"broke","time":{"created":1793715858367,"completed":1793715859165},"sessionID":"ses_e5e34188fffeksXn5Cl32bR4Mq","error":{"name":"APIError","data":{"message":"Insufficient credits. This account never purchased credits.","statusCode":402,"isRetryable":false,"responseHeaders":{"connection":"keep-alive","content-type":"application/json","date":"Tue, 03 Nov 2026 14:24:19 GMT","keep-alive":"timeout=5","transfer-encoding":"chunked"},"responseBody":"{\"error\":{\"message\":\"Insufficient credits. This account never purchased credits.\",\"code\":402}}","metadata":{"url":"http://127.0.0.1:18081/v1/chat/completions"}}}}}}
+
+data: {"id":"evt_1a1cbeee4001zpx3wIPD570114","type":"session.status","properties":{"sessionID":"ses_e5e34188fffeksXn5Cl32bR4Mq","status":{"type":"idle"}}}
+
+data: {"id":"evt_1a1cbeee4002xaXfzR3rGuElK5","type":"session.idle","properties":{"sessionID":"ses_e5e34188fffeksXn5Cl32bR4Mq"}}
+
+data: {"id":"evt_1a1cc0b0a001o52DGtnEBUHQfK","type":"server.heartbeat","properties":{}}
+
+data: {"id":"evt_1a1cc32210012QzjmUdbtlEv51","type":"server.heartbeat","properties":{}}
+
